@@ -1,0 +1,27 @@
+services:
+  app:
+    container_name: sample-app
+    build: .
+    ports:
+      - 7000:7000
+    env_file:
+      - .env
+    depends_on:
+      - db
+    restart: unless-stopped
+    volumes:
+      - .:/app
+
+  db:
+    image: postgres:17
+    container_name: sample-db
+    ports:
+      - 5432:5432
+    env_file:
+      - .env
+    restart: unless-stopped
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:

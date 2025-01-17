@@ -1,0 +1,47 @@
+{
+  "name": "express-typescript-template",
+  "version": "0.2.0",
+  "description": "A boilerplate for Express projects written in TypeScript",
+  "main": "server.ts",
+  "author": "Eric Alaribe",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/src/server.js",
+    "start:dev": "tsc-watch --onSuccess \"ts-node ./src/server.ts\"",
+    "migration:create": "prisma migrate dev",
+    "migration:deploy": "prisma migrate deploy",
+    "migration:generate": "prisma generate",
+    "prisma:init": "npx prisma init",
+    "prisma:seed": "ts-node --transpile-only prisma/seed.ts",
+    "prisma:studio": "prisma studio"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.12.1",
+    "@types/compression": "^1.7.2",
+    "@types/cookie-parser": "^1.4.3",
+    "@types/cors": "^2.8.12",
+    "@types/express": "^4.17.14",
+    "@types/jsonwebtoken": "^8.5.9",
+    "@types/morgan": "^1.9.3",
+    "@types/node": "^20.12.7",
+    "argon2": "^0.40.1",
+    "compression": "^1.7.4",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "helmet": "^6.0.0",
+    "joi": "^17.11.0",
+    "jsonwebtoken": "^9.0.0",
+    "moment": "^2.29.4",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "prisma": "^5.12.1",
+    "ts-node": "^10.9.2",
+    "tsc-watch": "^6.0.4",
+    "typescript": "^5.3.3"
+  },
+  "packageManager": "yarn@4.1.1"
+}
