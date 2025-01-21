@@ -1,3 +1,5 @@
-import { IUser, IUserSignup, IUserLogin } from './user.interface';
+import Pageable, { Page, PageableResponse, ProcessedPageable, PageableOrderBy } from './pageable.interface';
+import { IUser, IUserSignup, IUserLogin, IUpdateUserPassword } from './user.interface';
+import { IProduct } from './product.interface';
 
-export { IUser, IUserSignup, IUserLogin };
+export { Pageable, Page, PageableResponse, ProcessedPageable, PageableOrderBy, IUser, IUserSignup, IUserLogin, IUpdateUserPassword, IProduct };
