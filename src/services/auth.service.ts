@@ -7,28 +7,29 @@ import {
 } from '../config';
 import { db } from '../database';
 import UserService from './user.service';
-import { IUser } from '../interfaces';
+import { IUser, IUserLogin, IUserSignup } from '../interfaces';
 import { signJWT, verifyJWT } from '../utils';
 import {
   UnauthorizedError,
   ForbiddenError,
   NotFoundError,
 } from '../exceptions';
+import { PublicUserData } from '../types';
 
-class AuthService {
+export default class AuthService {
   user: UserService;
 
   constructor() {
     this.user = new UserService();
   }
 
-  public signToken(resource: IUser): {
+  private signToken(resource: IUser): {
     refreshToken: string;
     accessToken: string;
   } {
     const dataToSign = {
       id: resource.id,
-      roles: resource.roles
+      role: resource.role
     };
 
     const accessToken = signJWT(
@@ -45,55 +46,43 @@ class AuthService {
     return { accessToken, refreshToken };
   }
 
-  public async signup(
-    firstName: string,
-    lastName: string,
-    email_address: string,
-    password: string,
-    phone_number: string,
-    gender: string,
-  ): Promise<any> {
-    const hashedPassword = await argon.hash(password);
+  public async signup(data: IUserSignup): Promise<{accessToken: string, refreshToken: string}> {
+    const existingUser = await this.user.getUser({ emailAddress: data.emailAddress });
+    if (existingUser) throw new ForbiddenError(`User exists with provided email!`);
 
-    const existingUser = await this.user.getUser({ email_address });
-    if (existingUser) throw new ForbiddenError(`User already exists`);
+    const hashedPassword = await argon.hash(data.password);
 
-    const user = await this.user.createUser({
-      firstName,
-      lastName,
-      email_address,
-      password: hashedPassword,
-      phone_number,
-      gender,
-    });
-    return user
+    const user = await this.user.createUser({...data, password: hashedPassword});
+    const { accessToken, refreshToken } = this.signToken(user);
+    return { accessToken, refreshToken };
   }
 
-  public async login(
-    email_address: string,
-    password: string,
-  ): Promise<{
-    data: IUser;
+  public async adminSignup(data: IUserSignup): Promise<{accessToken: string, refreshToken: string}> {
+    const existingUser = await this.user.getUser({ emailAddress: data.emailAddress });
+    if (existingUser) throw new ForbiddenError(`User exists with provided email!`);
+
+    const hashedPassword = await argon.hash(data.password);
+
+    const user = await this.user.createUser({...data, password: hashedPassword, role: 'admin'});
+    const { accessToken, refreshToken } = this.signToken(user);
+    return { accessToken, refreshToken };
+  }
+
+  public async login(loginData: IUserLogin): Promise<{
+    data: PublicUserData;
     accessToken: string;
     refreshToken: string;
   }> {
     const user = await db.user.findUnique({
       where: {
-        email_address,
+        emailAddress: loginData.emailAddress,
       },
     });
 
-    if (!user || !(await argon.verify(user.password, password))) {
+    if (!user || !(await argon.verify(user.password, loginData.password))) {
       throw new UnauthorizedError(`Incorrect email or password!`);
     }
     const { refreshToken, accessToken } = this.signToken(user);
-    // const resourceToReturn = stripUser(user);
-
-    const refreshTokens = user.refreshTokens;
-    await this.user.updateUser(user.id, {
-      refreshTokens: [...refreshTokens, refreshToken],
-    });
-    // refreshTokens.push(refreshToken);
     return { data: user, accessToken, refreshToken };
   }
 
@@ -105,7 +94,7 @@ class AuthService {
     const token: any = verifyJWT(refreshToken, REFRESH_TOKEN_SECRET);
     const user = await this.user.getUser({
       id: token.id,
-      refreshTokens: token.refreshToken,
+
     });
 
     if (!user) throw new NotFoundError(`No user found`);
@@ -113,7 +102,7 @@ class AuthService {
     const accessToken = signJWT(
       {
         id: user.id,
-        roles: user.roles
+        role: user.role
       },
       ACCESS_TOKEN_SECRET,
       ACCESS_TOKEN_EXPIRY,
@@ -122,4 +111,3 @@ class AuthService {
   }
 }
 
-export default AuthService;
