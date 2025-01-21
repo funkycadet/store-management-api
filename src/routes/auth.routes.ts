@@ -11,6 +11,7 @@ authRouter.post(
   validateReqBody(signupSchema),
   authController.signup
 );
+authRouter.post("/signup/admin", validateReqBody(signupSchema), authController.adminSignup);
 authRouter.post("/login", validateReqBody(loginSchema), authController.login);
 authRouter.post('/refresh-token', authController.refreshTokens)
 

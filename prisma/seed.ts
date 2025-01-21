@@ -8,16 +8,16 @@ async function main() {
   const superadminPassword = await argon2.hash("superadminpassword");
 
   await prisma.user.upsert({
-    where: { email_address: "superadmin@example.com" },
+    where: { emailAddress: "superadmin@example.com" },
     update: {},
     create: {
       firstName: "Super",
       lastName: "Admin",
-      email_address: "superadmin@example.com",
+      emailAddress: "superadmin@example.com",
       password: superadminPassword,
-      phone_number: "",
+      phoneNumber: "",
       gender: "male",
-      roles: ["admin"],
+      role: "admin",
     },
   });
 }
