@@ -1,13 +1,18 @@
-import { Role } from "@prisma/client";
+import { Prisma, Role } from "@prisma/client";
 
-export interface IUser {
-  id?: string;
+export type IUser = Prisma.$UserPayload['scalars']
+
+export interface IUserSignup {
   firstName: string;
   lastName: string;
-  email_address: string;
-  phone_number: string;
+  emailAddress: string;
   password: string;
+  phoneNumber?: string;
   gender: string;
-  roles?: Role[];
-  refreshTokens?: string[];
+  role?: Role;
+}
+
+export interface IUserLogin {
+  emailAddress: string;
+  password: string;
 }
