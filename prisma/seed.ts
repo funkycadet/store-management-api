@@ -17,7 +17,7 @@ async function main() {
       password: superadminPassword,
       phoneNumber: "",
       gender: "male",
-      role: "admin",
+      role: "superadmin",
     },
   });
 }

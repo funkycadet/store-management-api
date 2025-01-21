@@ -36,4 +36,5 @@ model Product {
 enum Role {
   user
   admin
+  superadmin
 }
