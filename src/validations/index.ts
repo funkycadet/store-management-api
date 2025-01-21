@@ -1,4 +1,5 @@
 import { signupSchema, loginSchema } from "./authSchema";
-import { updateUserSchema } from "./userSchema";
+import { updateUserSchema, idSchema } from "./userSchema";
+import { createProductSchema } from "./productSchema";
 
-export { signupSchema, loginSchema, updateUserSchema };
+export { signupSchema, loginSchema, updateUserSchema, idSchema, createProductSchema };
