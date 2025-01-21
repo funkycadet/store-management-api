@@ -1,6 +1,6 @@
 import { Prisma, Role } from "@prisma/client";
 
-export type IUser = Prisma.$UserPayload['scalars']
+export type IUser = Omit<Prisma.$UserPayload['scalars'], ''>;
 
 export interface IUserSignup {
   firstName: string;
@@ -15,4 +15,10 @@ export interface IUserSignup {
 export interface IUserLogin {
   emailAddress: string;
   password: string;
+}
+
+export interface IUpdateUserPassword {
+  currentPassword: string;
+  newPassword: string;
+  confirmPassword: string;
 }
