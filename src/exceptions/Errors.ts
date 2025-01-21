@@ -1,11 +1,12 @@
 const STATUS_CODES = {
-    OK: 200,
-    BAD_REQUEST: 400,
-    UN_AUTHORISED: 401,
-    NOT_FOUND: 404,
-    INTERNAL_ERROR: 500,
-    CONFLICT: 409,
-    FORBIDDEN: 403
+  OK: 200,
+  CREATED: 201,
+  BAD_REQUEST: 400,
+  UNAUTHORISED: 401,
+  NOT_FOUND: 404,
+  INTERNAL_ERROR: 500,
+  CONFLICT: 409,
+  FORBIDDEN: 403
 }
 
 class AppError extends Error {
@@ -45,7 +46,7 @@ class NotFoundError extends AppError {
 //401
 class UnauthorizedError extends AppError {
     constructor(message = 'Not authprized') {
-        super(STATUS_CODES.UN_AUTHORISED, message, true)
+        super(STATUS_CODES.UNAUTHORISED, message, true)
     }
 }
 
