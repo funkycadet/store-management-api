@@ -1,16 +1,22 @@
 #!/bin/sh
-echo "Waiting for database..."
+# echo "Waiting for database..."
 
-while ! nc -z db 5432; do
-  sleep 1
-done
+# while ! nc -z db 27017; do
+#   sleep 10
+# done
 
-echo "Database started"
+# echo "Database started"
+echo "Seting up database"
 
-yarn migration:deploy
+# yarn migration:deploy
 
 yarn migration:generate
 
+yarn migration:deploy
+
 yarn prisma:seed
 
+echo "Starting up server"
+
 yarn build && yarn start
+

@@ -1,4 +1,4 @@
-FROM node:18-alpine
+FROM node:20-alpine
 
 WORKDIR /app
 
@@ -8,6 +8,6 @@ RUN yarn install
 
 COPY . .
 
-EXPOSE 7000
+EXPOSE 6543
 
 ENTRYPOINT ["/app/entrypoint.sh"]

@@ -1,27 +1,57 @@
 services:
-  app:
-    container_name: sample-app
+  api:
+    image: store-management-api
+    container_name: store-management-api
     build: .
     ports:
-      - 7000:7000
+      - 127.0.0.1:6543:6543
     env_file:
       - .env
-    depends_on:
-      - db
+    # depends_on:
+    #   - db
     restart: unless-stopped
-    volumes:
-      - .:/app
+    # volumes:
+    #   - .:/app
 
-  db:
-    image: postgres:17
-    container_name: sample-db
+  mongo:
     ports:
-      - 5432:5432
-    env_file:
-      - .env
-    restart: unless-stopped
+      - 127.0.0.1:8232:27017
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin
+    container_name: mongo
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - ./mongodb.key:/keyfile
+      - ./mongo1_log:/bin/shell:z
+    # networks:
+      # - my-mongo-cluster
+    image: mongo:8.0
+    command: --replSet myReplicaSet --bind_ip_all --keyFile '/keyfile'
+    healthcheck:
+      test: ["CMD-SHELL", "mongosh --username admin --password admin --authenticationDatabase admin --eval 'try { rs.status() } catch (err) { rs.initiate() }' || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
 
-volumes:
-  pgdata:
+  # db:
+  #   image: bitnami/mongodb:latest
+  #   container_name: db
+  #   environment:
+  #     - MONGODB_ROOT_USER=admin
+  #     - MONGODB_ROOT_PASSWORD=admin
+  #     - MONGODB_USERNAME=appuser     # Optional: Create an additional user
+  #     - MONGODB_PASSWORD=apppassword
+  #   ports:
+  #     - "27017:27017"
+  #   volumes:
+  #     - mongodb_data:/bitnami/mongodb
+  #     - ./mongodb.key:/keyfile
+  #     - ./mongo1_log:/bin/shell:z
+  #   entrypoint:
+  #     [ "mongod", "--replSet", "myReplicaSet", "--bind_ip", "localhost,db" ]
+  #   restart: unless-stopped
+ 
+# volumes:
+#   mongodb_data:
+#     driver: local
