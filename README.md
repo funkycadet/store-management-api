@@ -92,4 +92,4 @@ where service name is the name of the service you want to check the logs for.
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## API Documentation
-For API documentation, visit this [link](https://documenter.getpostman.com/view/23964763/2sA3rxrtdh)
+For API documentation, visit this [link](https://documenter.getpostman.com/view/40606983/2sAYQdkVp7)
