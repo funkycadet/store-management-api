@@ -72,7 +72,7 @@ yarn prisma:seed
 yarn start:dev
 ```
 
-Visit `http://0.0.0.0:6543/health` in your browser to see if the server is running.
+Visit `http://0.0.0.0:6543` in your browser to see if the server is running.
 
 If you would prefer to use Docker to spin up the server, you can run the following command:
 
