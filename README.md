@@ -93,3 +93,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## API Documentation
 For API documentation, visit this [link](https://documenter.getpostman.com/view/40606983/2sAYQdkVp7)
+The API is currently hosted [here](https://store-management-api-fajb.onrender.com)
