@@ -1,6 +1,6 @@
-# Express-TypeScript-Boilerplate
+# Store Management API 
 
-This is a backend boilerplate code for ExpressJS in TypeScript.
+This repository contains the code for the Store Management API 
 
 ## Features
 
@@ -12,7 +12,7 @@ This is a backend boilerplate code for ExpressJS in TypeScript.
 - Jest
 - Docker
 - Docker Compose
-- PostgreSQL
+- MongoDB
 
 ## Getting Started
 
@@ -23,7 +23,7 @@ Ensure you have the following installed on your local machine:
 - [Docker](https://www.docker.com/)
 - [Docker Compose](https://docs.docker.com/compose/)
 - [Prisma](https://www.prisma.io/)
-- [PostgreSQL](https://www.postgresql.org/) (>= 12.0)
+- [MongoDB](https://www.mongodb.com)
 - [Yarn](https://yarnpkg.com/)
 - [Postman](https://www.postman.com/) (for API testing)
 - [VSCode](https://code.visualstudio.com/) (or any other code editor)
@@ -33,7 +33,7 @@ Ensure you have the following installed on your local machine:
 1. Clone the repository
 
 ```bash
-git clone git@github.com:funkycadet/express-typescript-boilerplate.git
+git clone https://github.com/funkycadet/store-management-api.git
 ```
 
 2. Install dependencies
@@ -72,7 +72,7 @@ yarn prisma:seed
 yarn start:dev
 ```
 
-Visit `http://0.0.0.0:7000/health` in your browser to see if the server is running.
+Visit `http://0.0.0.0:6543/health` in your browser to see if the server is running.
 
 If you would prefer to use Docker to spin up the server, you can run the following command:
 
