@@ -24,7 +24,7 @@ export default async (app: Application) => {
   app.use(compression());
 
   // Application Routes
-  // app.use("/", healthRouter); // Health check
+  app.use("/", healthRouter); // Health check
   app.use('/auth', authRouter);
   app.use('/user', userRouter);
   app.use('/health', healthRouter);
